@@ -7,6 +7,9 @@ import LandingPage from "./components/LandingPage";
 import PurchaseReport from "./components/PurchaseReport";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./auth/register/Register";
+import Navbar from "./components/navbar/Navbar";
+import Layout from "./pages/Layout";
+import Cart from "./components/cart/Cart";
 function App() {
 	return (
 		<>
@@ -15,8 +18,10 @@ function App() {
 					<Route path="/" element={<Login />}></Route>
 					<Route path="/login" element={<Login />}></Route>
 					<Route path="/register" element={<Register />}></Route>
-					<Route path="/home" element={<LandingPage />}></Route>
-					<Route path="/home" element={<PurchaseReport />}></Route>
+					<Route path="/home" element={<Layout />}></Route>
+					<Route path="/cart" element={<Cart />}></Route>
+					<Route path="/purchase" element={<PurchaseReport />}></Route>
+
 				</Routes>
 			</Router>
 		</>

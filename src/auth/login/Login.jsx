@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
 	const [loginInput, setLoginInput] = useState({
 		username: "",
 		password: "",
 	});
+	const [login, setLogin] = useState(false);
 	const navigate = useNavigate();
-	const [errorMessage, setErrorMessage] = useState("");
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
@@ -22,13 +24,22 @@ const Login = () => {
 			.then((response) => {
 				// Login successful
 				// You can handle the successful login here, such as storing the token or redirecting the user to another page
-				alert("Login successful");
-				navigate("/home");
+				toast.success("Sign in successful!", {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: 1000, // Close the toast after 3 seconds
+					hideProgressBar: true,
+				});
+				setTimeout(() => {
+					navigate("/home");
+				}, 1500);
 			})
 			.catch((error) => {
 				// Login failed
-				setErrorMessage("Invalid username or password");
-				alert("Login failed:", error);
+				toast.error("Sign in failed. Please try again.", {
+					position: toast.POSITION.TOP_CENTER,
+					autoClose: 1000,
+					hideProgressBar: true,
+				});
 			});
 	};
 
@@ -139,6 +150,7 @@ const Login = () => {
 					</p>
 				</form>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 };
