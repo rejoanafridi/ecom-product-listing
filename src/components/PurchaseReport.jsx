@@ -45,7 +45,10 @@ const PurchaseReport = () => {
 					</ul>
 					<h3 className="text-lg font-semibold mb-2">Total Purchase</h3>
 					<p className="text-xl">
-						{purchases.reduce((data, obj) => data + obj.price, 0).toFixed(2)} $
+						{purchases
+							.reduce((data, obj) => data + obj.price * obj.quantity, 0)
+							.toFixed(2)}{" "}
+						$
 					</p>
 				</div>
 			)}
