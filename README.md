@@ -27,7 +27,7 @@ Start the server
 ```
 
 
-# Project Title
+# Project Summary
 The project is a web application that includes a login interface, user profile management, a landing page with product cards, a cart system, and a purchase report. The website is designed to be responsive and mobile-friendly.
 Overall, the project successfully combines user authentication, product display, cart functionality, purchase history, and responsive design, providing a mini e-commerce experience for users.
 ## Features
