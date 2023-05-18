@@ -15,7 +15,7 @@ specifiers:
   react-icons: ^4.8.0
   react-redux: ^8.0.5
   react-router-dom: ^6.11.1
-  react-toastify: ^7.0.4
+  react-toastify: ^9.1.3
   tailwindcss: ^3.3.2
   vite: ^4.3.2
 
@@ -27,7 +27,7 @@ dependencies:
   react-icons: 4.8.0_react@18.2.0
   react-redux: 8.0.5_lhsvdmrfrkqkmxtqosqgyd3k4i
   react-router-dom: 6.11.1_biqbaboplfbrettd7655fr4n2y
-  react-toastify: 7.0.4_biqbaboplfbrettd7655fr4n2y
+  react-toastify: 9.1.3_biqbaboplfbrettd7655fr4n2y
 
 devDependencies:
   '@types/react': 18.2.6
@@ -2128,8 +2128,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-toastify/7.0.4_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-Rol7+Cn39hZp5hQ/k6CbMNE2CKYV9E5OQdC/hBLtIQU2xz7DdAm7xil4NITQTHR6zEbE5RVFbpgSwTD7xRGLeQ==}
+  /react-toastify/9.1.3_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-fPfb8ghtn/XMxw3LkxQBk3IyagNpF/LIKjOBflbexr2AWxAH1MJgvnESwEwBn9liLFXgTKWgBSdZpw9m4OTHTg==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'

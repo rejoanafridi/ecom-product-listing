@@ -31,9 +31,9 @@ const Navbar = () => {
 				<div className="flex items-center justify-between h-16">
 					{/* Logo */}
 					<div className="flex-shrink-0">
-						<a href="index.html" className="text-2xl font-bold text-gray-800">
+						<Link to="/" className="text-2xl font-bold text-gray-800">
 							MiniCommerce
-						</a>
+						</Link>
 					</div>
 					{/* Hamburger Menu for Mobile */}
 					<div className="flex sm:hidden">

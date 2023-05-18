@@ -35,7 +35,7 @@ const Login = () => {
 	if (!isLoading && !error && token) {
 		toast.success("Sign in successful!", {
 			position: toast.POSITION.TOP_CENTER,
-			autoClose: 1000, // Close the toast after 3 seconds
+			autoClose: 1000,
 			hideProgressBar: true,
 		});
 		setTimeout(() => {
@@ -57,7 +57,7 @@ const Login = () => {
 	// 	if (tokens) {
 	// 		toast.success("You are already logged in!", {
 	// 			position: toast.POSITION.TOP_CENTER,
-	// 			autoClose: 1000, // Close the toast after 3 seconds
+	// 			autoClose: 1000, //
 	// 			hideProgressBar: true,
 	// 		});
 

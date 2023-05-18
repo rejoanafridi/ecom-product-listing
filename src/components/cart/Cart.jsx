@@ -55,7 +55,7 @@ function Cart() {
 	}, []);
 
 	useEffect(() => {
-		// dispatch(buyCartItem(buyItems));yarn 
+		// dispatch(buyCartItem(buyItems));yarn
 		dispatch(addBuyProducts(buyItems));
 	}, [dispatch, buyItems]);
 
@@ -128,9 +128,9 @@ function Cart() {
 
 							<button
 								onClick={() => handleBuyNow(item)}
-								className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded mr-4"
+								className="bg-green-500 hover:bg-green-700 text-white py-2 sm:px-2  md:px-4  px-4 rounded mr-4"
 							>
-								Buy Now
+								Buy
 							</button>
 						</div>
 					))}
