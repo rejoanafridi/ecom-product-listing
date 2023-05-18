@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 ## Run Locally
 
@@ -61,7 +61,4 @@ Project Completion: All the specified requirements have been implemented and int
 
 https://mini-commerce-rejaon-islam.netlify.app/
 =======
-# ecom-product-listing
-ecom-product-listing
-Live site: https://mini-commerce-rejaon-islam.netlify.app/
->>>>>>> d8567744845c3408e1f35811e0a1b77180a7a0a7
+
