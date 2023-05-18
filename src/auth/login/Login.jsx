@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../features/auth/authSlice";
+import Loader from "../../utils/Loader";
 const Login = () => {
 	const dispatch = useDispatch();
 	const { isLoading, error, token } = useSelector((state) => state.auth);
@@ -22,7 +23,7 @@ const Login = () => {
 
 	let content;
 	if (isLoading) {
-		content = <p>Loading....</p>;
+		content = <Loader />;
 	}
 	if (!isLoading && error) {
 		toast.error("Sign in failed. Please try again.", {
@@ -59,7 +60,7 @@ const Login = () => {
 	// 			autoClose: 1000, // Close the toast after 3 seconds
 	// 			hideProgressBar: true,
 	// 		});
-			
+
 	// 	}
 	// }, [tokens]);
 	return (
@@ -69,13 +70,19 @@ const Login = () => {
 					Get started today
 				</h1>
 
-				<div className="text-left">
+				<div className="text-left ">
 					<p>basic user name and password</p>
 					<div>
-						<p>username: mor_2314</p>
-						<p>password: 83r5^_</p>
+						<p>
+							username: <span className="text-green-500">mor_2314</span>
+						</p>
+						<p>
+							password: <span className="text-green-500">83r5^_</span>{" "}
+						</p>
 					</div>
 				</div>
+
+				{content}
 
 				<form
 					onSubmit={handleSubmit}
@@ -92,7 +99,7 @@ const Login = () => {
 							<input
 								type="text"
 								className="w-full rounded-lg outline outline-1 outline-offset-2 outline-indigo-400 border-gray-200 p-4 pe-12 text-sm shadow-sm"
-								placeholder="Enter your username"
+								placeholder="mor_2314"
 								onChange={(e) =>
 									setLoginInput({ ...loginInput, username: e.target.value })
 								}
@@ -123,7 +130,7 @@ const Login = () => {
 							<input
 								type="password"
 								className="w-full rounded-lg outline outline-1 outline-offset-2 outline-indigo-400 border-gray-200 p-4 pe-12 text-sm shadow-sm"
-								placeholder="Enter your password"
+								placeholder="83r5^_"
 								onChange={(e) =>
 									setLoginInput({ ...loginInput, password: e.target.value })
 								}
@@ -168,7 +175,6 @@ const Login = () => {
 						</Link>
 					</p>
 				</form>
-				{content}
 			</div>
 			<ToastContainer />
 		</div>

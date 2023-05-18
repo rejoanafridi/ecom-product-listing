@@ -2,9 +2,16 @@ import React from "react";
 import MenuItems from "./MenuItems";
 import { Link } from "react-router-dom";
 import { BsCart } from "react-icons/Bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogOut } from "../../features/auth/authSlice";
 const Navbar = () => {
+	const dispatch = useDispatch();
 	const cartItem = useSelector((state) => state.cartItems);
+	const user = useSelector((state) => state.auth);
+
+	const logOut = () => {
+		dispatch(userLogOut());
+	};
 	return (
 		<header className="bg-white shadow">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,7 +89,15 @@ const Navbar = () => {
 							</div>
 						</Link>
 
-						<Link to="/login">login</Link>
+						<div className="flex items-center gap-3">
+							<h3 className="text-indigo-700 text-xl ">{user.username}</h3>
+							<button
+								className="text-rose-700 text-xl"
+								onClick={() => logOut()}
+							>
+								logout
+							</button>
+						</div>
 					</nav>
 				</div>
 			</div>

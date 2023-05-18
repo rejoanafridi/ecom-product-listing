@@ -55,7 +55,7 @@ function Cart() {
 	}, []);
 
 	useEffect(() => {
-		// dispatch(buyCartItem(buyItems));
+		// dispatch(buyCartItem(buyItems));yarn 
 		dispatch(addBuyProducts(buyItems));
 	}, [dispatch, buyItems]);
 
