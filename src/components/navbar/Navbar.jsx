@@ -19,7 +19,7 @@ const Navbar = () => {
 					{/* Logo */}
 					<div className="flex-shrink-0">
 						<a href="index.html" className="text-2xl font-bold text-gray-800">
-							E-Com
+							MiniCommerce
 						</a>
 					</div>
 					{/* Hamburger Menu for Mobile */}
