@@ -5,6 +5,8 @@ import { BsCart } from "react-icons/Bs";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogOut } from "../../features/auth/authSlice";
 import { useState } from "react";
+import { addSearch } from "../../features/filter/filterSlice";
+import { useEffect } from "react";
 const Navbar = () => {
 	const dispatch = useDispatch();
 	const cartItem = useSelector((state) => state.cartItems);
@@ -12,9 +14,14 @@ const Navbar = () => {
 	const user = useSelector((state) => state.auth);
 	const [search, setSearch] = useState("");
 	// handle search
-	const handleSearch = () => {
-		dispatch()
-	};
+	// const handleSearch = () => {
+	// 	dispatch(addSearch(search));
+	// 	setSearch("");
+	// };
+
+	useEffect(() => {
+		dispatch(addSearch(search));
+	}, [dispatch, search]);
 	const logOut = () => {
 		dispatch(userLogOut());
 	};
@@ -64,9 +71,10 @@ const Navbar = () => {
 								type="text"
 								className="w-64 py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
 								placeholder="Search products..."
+								value={search}
 								onChange={(e) => setSearch(e.target.value)}
 							/>
-							<button
+							{/* <button
 								onClick={handleSearch}
 								className="absolute top-0 right-0 h-full w-12 bg-indigo-500 text-white rounded-r-md flex items-center justify-center"
 							>
@@ -84,7 +92,7 @@ const Navbar = () => {
 										d="M15 19l-7-7 7-7"
 									/>
 								</svg>
-							</button>
+							</button> */}
 						</div>
 						{/* Cart Summary */}
 						<Link to="/cart">

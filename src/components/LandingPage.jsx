@@ -11,6 +11,7 @@ const LandingPage = () => {
 	const { products, isLoading, isError } = useSelector(
 		(state) => state.products
 	);
+	const { search } = useSelector((state) => state.filter);
 	const [cartItems, setCartItems] = useState([]);
 	useEffect(() => {
 		// checking products
@@ -59,33 +60,37 @@ const LandingPage = () => {
 	if (!isError && !isLoading && products.length > 0) {
 		content = (
 			<>
-				{products.map((product) => (
-					<div
-						key={product.id}
-						className="bg-white rounded-lg shadow p-4 flex flex-col justify-between "
-					>
-						<img
-							src={product.image}
-							alt={product.title}
-							className="w-full h-40 object-cover mb-4 rounded"
-						/>
-						<div className="content">
-							<h3 className="text-lg font-semibold mb-2">{product.title}</h3>
-							<p className="text-gray-700 mb-2">
-								{product.description.slice(0, 50)}...
-							</p>
-							<p className="text-indigo-600 font-medium">${product.price}</p>
-						</div>
-
-						{/* Add to cart button */}
-						<button
-							onClick={() => addToCartProduct(product)}
-							className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+				{products
+					.filter((product) =>
+						product.title.toLowerCase().includes(search.toLowerCase())
+					)
+					.map((product) => (
+						<div
+							key={product.id}
+							className="bg-white rounded-lg shadow p-4 flex flex-col justify-between "
 						>
-							Add to Cart
-						</button>
-					</div>
-				))}
+							<img
+								src={product.image}
+								alt={product.title}
+								className="w-full h-40 object-cover mb-4 rounded"
+							/>
+							<div className="content">
+								<h3 className="text-lg font-semibold mb-2">{product.title}</h3>
+								<p className="text-gray-700 mb-2">
+									{product.description.slice(0, 50)}...
+								</p>
+								<p className="text-indigo-600 font-medium">${product.price}</p>
+							</div>
+
+							{/* Add to cart button */}
+							<button
+								onClick={() => addToCartProduct(product)}
+								className="mt-4 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+							>
+								Add to Cart
+							</button>
+						</div>
+					))}
 			</>
 		);
 	}
