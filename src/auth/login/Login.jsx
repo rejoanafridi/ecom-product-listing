@@ -1,48 +1,67 @@
 import React, { useState, useEffect } from "react";
-
-import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../features/auth/authSlice";
 const Login = () => {
+	const dispatch = useDispatch();
+	const { isLoading, error, token } = useSelector((state) => state.auth);
 	const [loginInput, setLoginInput] = useState({
 		username: "",
 		password: "",
 	});
-	const [login, setLogin] = useState(false);
+	const [tokens, setTokens] = useState("");
 	const navigate = useNavigate();
 
+	// handle login
 	const handleSubmit = (event) => {
 		event.preventDefault();
-
-		// Perform authentication logic
-		axios
-			.post("https://fakestoreapi.com/auth/login", {
-				username: loginInput.username,
-				password: loginInput.password,
-			})
-			.then((response) => {
-				// Login successful
-				// You can handle the successful login here, such as storing the token or redirecting the user to another page
-				toast.success("Sign in successful!", {
-					position: toast.POSITION.TOP_CENTER,
-					autoClose: 1000, // Close the toast after 3 seconds
-					hideProgressBar: true,
-				});
-				setTimeout(() => {
-					navigate("/home");
-				}, 1500);
-			})
-			.catch((error) => {
-				// Login failed
-				toast.error("Sign in failed. Please try again.", {
-					position: toast.POSITION.TOP_CENTER,
-					autoClose: 1000,
-					hideProgressBar: true,
-				});
-			});
+		dispatch(loginUser(loginInput.username, loginInput.password));
 	};
 
+	let content;
+	if (isLoading) {
+		content = <p>Loading....</p>;
+	}
+	if (!isLoading && error) {
+		toast.error("Sign in failed. Please try again.", {
+			position: toast.POSITION.TOP_CENTER,
+			autoClose: 1000,
+			hideProgressBar: true,
+		});
+	}
+	if (!isLoading && !error && token) {
+		toast.success("Sign in successful!", {
+			position: toast.POSITION.TOP_CENTER,
+			autoClose: 1000, // Close the toast after 3 seconds
+			hideProgressBar: true,
+		});
+		setTimeout(() => {
+			navigate("/home");
+		}, 1500);
+	}
+	useEffect(() => {
+		localStorage.setItem("token", JSON.stringify(token));
+	}, [token]);
+
+	useEffect(() => {
+		const authToken = localStorage.getItem("token");
+		if (authToken) {
+			setTokens(JSON.parse(authToken));
+		}
+	}, []);
+
+	// useEffect(() => {
+	// 	if (tokens) {
+	// 		toast.success("You are already logged in!", {
+	// 			position: toast.POSITION.TOP_CENTER,
+	// 			autoClose: 1000, // Close the toast after 3 seconds
+	// 			hideProgressBar: true,
+	// 		});
+			
+	// 	}
+	// }, [tokens]);
 	return (
 		<div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
 			<div className="mx-auto max-w-lg">
@@ -149,6 +168,7 @@ const Login = () => {
 						</Link>
 					</p>
 				</form>
+				{content}
 			</div>
 			<ToastContainer />
 		</div>

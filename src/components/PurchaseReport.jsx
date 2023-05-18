@@ -4,29 +4,14 @@ import { useSelector } from "react-redux";
 
 const PurchaseReport = () => {
 	const { cart } = useSelector((state) => state.cartItems);
+	console.log(cart);
 	const [purchases, setPurchases] = useState(cart);
 
-	// Calculate total amount spent on each category
-	const calculateCategoryTotal = () => {
-		const categoryTotals = {};
-
-		purchases.forEach((purchase) => {
-			purchase.products.forEach((product) => {
-				if (categoryTotals.hasOwnProperty(product.category)) {
-					categoryTotals[product.category] += product.price;
-				} else {
-					categoryTotals[product.category] = product.price;
-				}
-			});
-		});
-
-		return categoryTotals;
-	};
-
-	const categoryTotals = calculateCategoryTotal();
-
+	useEffect(() => {
+		localStorage.setItem("purchase", JSON.stringify(purchases));
+	}, [purchases]);
 	return (
-		<div className="container mx-auto py-8">
+		<div className="container mx-auto py-8 sm:px-3 px-5">
 			<h2 className="text-2xl font-semibold mb-4">Purchase Report</h2>
 			{purchases.length === 0 ? (
 				<p>No purchase history available.</p>
@@ -34,29 +19,34 @@ const PurchaseReport = () => {
 				<div>
 					<h3 className="text-lg font-semibold mb-2">Purchase History</h3>
 					<ul className="mb-4">
-						{purchases.map((purchase) => (
-							<li key={purchase.id}>
-								<p>Order ID: {purchase.id}</p>
-								<p>Date: {purchase.date}</p>
-								<ul>
-									{purchase.products.map((product) => (
-										<li key={product.id}>
-											{product.title} - ${product.price}
-										</li>
-									))}
-								</ul>
-								<hr className="my-4" />
+						{purchases.map((purchase, idx) => (
+							<li
+								key={idx}
+								className="flex  flex-wrap gap-5 items-center mb-4 "
+							>
+								<img
+									src={purchase.image}
+									alt=""
+									className="w-16 h-16 sm:w-20 sm:h-20 rounded"
+								/>
+
+								<div className="flex flex-col   sm:flex-row sm:items-center sm:justify-between flex-grow">
+									<p>Order ID: {purchase.id}</p>
+									<p>Price: {purchase.price}</p>
+									<p>Quantity: {purchase.quantity}</p>
+
+									<h3 className="text-lg font-semibold mb-2 text-indigo-500">
+										Total Price: {purchase.price * purchase.quantity} $
+									</h3>
+								</div>
+								<hr className="my-4 w-full sm:hidden" />
 							</li>
 						))}
 					</ul>
-					<h3 className="text-lg font-semibold mb-2">Category Totals</h3>
-					<ul>
-						{Object.entries(categoryTotals).map(([category, total]) => (
-							<li key={category}>
-								{category} - ${total.toFixed(2)}
-							</li>
-						))}
-					</ul>
+					<h3 className="text-lg font-semibold mb-2">Total Purchase</h3>
+					<p className="text-xl">
+						{purchases.reduce((data, obj) => data + obj.price, 0).toFixed(2)} $
+					</p>
 				</div>
 			)}
 		</div>

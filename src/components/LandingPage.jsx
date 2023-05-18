@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../features/products/productsSlice";
 import { addToCart } from "../features/cart/cartSlice";
+import Loader from "../utils/Loader";
 
 const LandingPage = () => {
 	const dispatch = useDispatch();
@@ -12,7 +13,10 @@ const LandingPage = () => {
 	);
 	const [cartItems, setCartItems] = useState([]);
 	useEffect(() => {
-		dispatch(fetchProducts());
+		// checking products
+		if (products.length === 0) {
+			dispatch(fetchProducts());
+		}
 	}, [dispatch]);
 
 	// Add product to cart
@@ -37,12 +41,24 @@ const LandingPage = () => {
 		dispatch(addToCart(cartItems));
 	}, [dispatch, cartItems]);
 	useEffect(() => {
-		localStorage.setItem("cartItems", JSON.stringify(cartItems));
-	}, [cartItems]);
-	return (
-		<div className="container mx-auto py-8">
-			<h2 className="text-2xl font-semibold mb-4">Product Listing</h2>
-			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+		const savedCartItems = localStorage.getItem("cartItems");
+		if (savedCartItems) {
+			setCartItems(JSON.parse(savedCartItems));
+		}
+	}, []);
+	let content;
+	// what to render
+	if (isLoading) {
+		content = <Loader></Loader>;
+	}
+
+	if (!isLoading && isError) {
+		content = <p>Something is wrong!</p>;
+	}
+
+	if (!isError && !isLoading && products.length > 0) {
+		content = (
+			<>
 				{products.map((product) => (
 					<div key={product.id} className="bg-white rounded-lg shadow p-4">
 						<img
@@ -52,7 +68,7 @@ const LandingPage = () => {
 						/>
 						<h3 className="text-lg font-semibold mb-2">{product.title}</h3>
 						<p className="text-gray-700 mb-2">
-							{product.description.slice(0, 100)}...
+							{product.description.slice(0, 50)}...
 						</p>
 						<p className="text-blue-600 font-medium">${product.price}</p>
 
@@ -65,6 +81,15 @@ const LandingPage = () => {
 						</button>
 					</div>
 				))}
+			</>
+		);
+	}
+
+	return (
+		<div className="container mx-auto py-8">
+			<h2 className="text-2xl font-semibold mb-4">Product Listing</h2>
+			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+				{content}
 			</div>
 		</div>
 	);

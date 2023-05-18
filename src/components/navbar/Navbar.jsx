@@ -81,6 +81,8 @@ const Navbar = () => {
 								</span>
 							</div>
 						</Link>
+
+						<Link to="/login">login</Link>
 					</nav>
 				</div>
 			</div>

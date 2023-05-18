@@ -4,11 +4,16 @@ import { useMemo } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addBuyProducts, buyCartItem } from "../../features/cart/cartSlice";
+import {
+	addBuyProducts,
+	buyCartItem,
+	removeCartProducts,
+} from "../../features/cart/cartSlice";
 
 function Cart() {
-	const { cartProducts } = useSelector((state) => state.cartItems);
+	const { cartProducts, cart } = useSelector((state) => state.cartItems);
 	const dispatch = useDispatch();
+
 	const [cartItems, setCartItems] = useState(cartProducts);
 	const [buyItems, setBuyItems] = useState([]);
 	const handleQuantityChange = (itemId, newQuantity) => {
@@ -21,6 +26,7 @@ function Cart() {
 
 	const handleRemoveItem = (itemId) => {
 		setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+		dispatch(removeCartProducts(itemId));
 	};
 
 	const calculateSubtotal = () => {
@@ -30,12 +36,29 @@ function Cart() {
 		);
 	};
 
-	console.log(buyItems);
+	// buy now handlers
+	const handleBuyNow = (item) => {
+		setBuyItems([...buyItems, item]);
+
+		handleRemoveItem(item.id);
+	};
+
+	useEffect(() => {
+		localStorage.setItem("cartItems", JSON.stringify(cartItems));
+	}, [cartItems, buyItems]);
+
+	useEffect(() => {
+		const savedPurchase = localStorage.getItem("purchase");
+		if (savedPurchase) {
+			setBuyItems(JSON.parse(savedPurchase));
+		}
+	}, []);
 
 	useEffect(() => {
 		// dispatch(buyCartItem(buyItems));
 		dispatch(addBuyProducts(buyItems));
 	}, [dispatch, buyItems]);
+
 	return (
 		<div className="flex justify-center my-20">
 			<div className="max-w-3xl w-full">
@@ -57,7 +80,9 @@ function Cart() {
 								/>
 							</div>
 							<div>
-								<h3 className="text-lg font-medium">{item?.title}</h3>
+								<h3 className="text-lg font-medium">
+									{item?.title.slice(0, 25)}
+								</h3>
 								<p className="text-gray-600">
 									Price: ${item?.price.toFixed(2)}
 								</p>
@@ -96,23 +121,13 @@ function Cart() {
 										className="text-red-500 hover:text-red-700 focus:outline-none ml-auto"
 										onClick={() => handleRemoveItem(item?.id)}
 									>
-										<svg
-											className="h-5 w-5"
-											xmlns="http://www.w3.org/2000/svg"
-											viewBox="0 0 20 20"
-											fill="currentColor"
-										>
-											<path
-												fillRule="evenodd"
-												d="M13 5l1-1 2 2 2-2 1 1-2 2 2 2-1 1-2-2-2 2-1-1 2-2-2-2 1-1 2z"
-												clipRule="evenodd"
-											/>
-										</svg>
+										cancel
 									</button>
 								</div>
 							</div>
+
 							<button
-								onClick={() => setBuyItems([...buyItems, item])}
+								onClick={() => handleBuyNow(item)}
 								className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded mr-4"
 							>
 								Buy Now
@@ -120,8 +135,17 @@ function Cart() {
 						</div>
 					))}
 					{/* Proceed to Checkout and Continue Shopping Buttons */}
-					<div className="flex justify-end m-5">
-						<a></a>
+					<div className="flex justify-end m-5 gap-5">
+						{buyItems.length > 0 ? (
+							<Link to="/purchase">
+								<button className="bg-green-500 hover:bg-green-700 text-white py-2 px-4 rounded">
+									Order History {cart.length}
+								</button>
+							</Link>
+						) : (
+							""
+						)}
+
 						<Link to="/home">
 							<button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
 								Continue Shopping
