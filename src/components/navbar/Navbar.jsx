@@ -107,15 +107,23 @@ const Navbar = () => {
 							</div>
 						</Link>
 
-						<div className="flex items-center gap-3">
-							<h3 className="text-indigo-700 text-xl ">{user.username}</h3>
-							<button
-								className="text-rose-700 text-xl"
-								onClick={() => logOut()}
-							>
-								logout
-							</button>
-						</div>
+						{user.username ? (
+							<div className="flex items-center gap-3">
+								<h3 className="text-indigo-700 text-xl ">{user.username}</h3>
+								<button
+									className="text-rose-700 text-xl"
+									onClick={() => logOut()}
+								>
+									logout
+								</button>
+							</div>
+						) : (
+							<Link to="/login">
+								<button className="px-3 py-2 bg-indigo-700 text-white rounded-md">
+									Login
+								</button>
+							</Link>
+						)}
 					</nav>
 				</div>
 			</div>
