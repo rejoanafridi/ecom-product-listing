@@ -9,6 +9,7 @@ import {
 	buyCartItem,
 	removeCartProducts,
 } from "../../features/cart/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 function Cart() {
 	const { cartProducts, cart } = useSelector((state) => state.cartItems);
@@ -27,6 +28,7 @@ function Cart() {
 	const handleRemoveItem = (itemId) => {
 		setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
 		dispatch(removeCartProducts(itemId));
+	
 	};
 
 	const calculateSubtotal = () => {
@@ -41,6 +43,11 @@ function Cart() {
 		setBuyItems([...buyItems, item]);
 
 		handleRemoveItem(item.id);
+		toast.success("Product Buying Successfully!!", {
+			position: toast.POSITION.TOP_CENTER,
+			autoClose: 1000,
+			hideProgressBar: true,
+		});
 	};
 
 	useEffect(() => {
@@ -57,6 +64,7 @@ function Cart() {
 	useEffect(() => {
 		// dispatch(buyCartItem(buyItems));yarn
 		dispatch(addBuyProducts(buyItems));
+		
 	}, [dispatch, buyItems]);
 
 	return (
@@ -132,6 +140,7 @@ function Cart() {
 							>
 								Buy
 							</button>
+							<ToastContainer />
 						</div>
 					))}
 					{/* Proceed to Checkout and Continue Shopping Buttons */}

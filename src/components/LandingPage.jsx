@@ -5,6 +5,7 @@ import { fetchProducts } from "../features/products/productsSlice";
 import { addToCart } from "../features/cart/cartSlice";
 import Loader from "../utils/Loader";
 import Pagination from "./Pagination";
+import { ToastContainer, toast } from "react-toastify";
 
 const LandingPage = () => {
 	const dispatch = useDispatch();
@@ -44,10 +45,21 @@ const LandingPage = () => {
 				}
 				return item;
 			});
+
 			setCartItems(updatedCartItems);
+			toast.success("Added to the Cart!", {
+				position: toast.POSITION.TOP_CENTER,
+				autoClose: 1000,
+				hideProgressBar: true,
+			});
 		} else {
 			// If the product doesn't exist in the cart, add it with quantity 1
 			setCartItems([...cartItems, { ...product, quantity: 1 }]);
+			toast.success("Added to the Cart", {
+				position: toast.POSITION.TOP_CENTER,
+				autoClose: 1000,
+				hideProgressBar: true,
+			});
 		}
 	};
 
@@ -130,8 +142,9 @@ const LandingPage = () => {
 			</div>
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 				{content}
+				<ToastContainer />
 			</div>
-			<Pagination />
+			{/* <Pagination /> */}
 		</div>
 	);
 };

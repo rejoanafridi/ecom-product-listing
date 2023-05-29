@@ -167,12 +167,12 @@ const Login = () => {
 					</button>
 					<p className="text-center text-sm text-gray-500">
 						No account?
-						<Link
+						{/* <Link
 							to={"/register"}
 							className="underline text-xl ml-3 text-indigo-600 "
 						>
 							Sign up
-						</Link>
+						</Link> */}
 					</p>
 				</form>
 			</div>
