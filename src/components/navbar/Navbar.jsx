@@ -61,9 +61,10 @@ const Navbar = () => {
 					{/* Desktop Navigation and User Account */}
 					<nav className="hidden sm:flex space-x-4">
 						<div className="hidden sm:block">
-							<div className="flex space-x-4">
-								<MenuItems title="Home" />
-								<MenuItems title="products" />
+							<div className="flex space-x-4 justify-center items-center mt-2">
+								<Link to="/purchase">
+									<MenuItems title="purchases" />
+								</Link>
 							</div>
 						</div>
 						{/* Search Bar */}
@@ -132,8 +133,9 @@ const Navbar = () => {
 			<div className="sm:hidden">
 				<div className="px-2 pt-2 pb-3 space-y-1 text-center">
 					<div className="flex justify-evenly">
-						<MenuItems title="home" />
-						<MenuItems title="products" />
+						<Link to="/purchase">
+							<MenuItems title="purchases" />
+						</Link>
 					</div>
 
 					<div>

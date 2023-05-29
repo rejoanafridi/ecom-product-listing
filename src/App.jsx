@@ -17,8 +17,8 @@ function App() {
 					<Route path="/home" element={<Layout />}></Route>
 					<Route exact element={<PrivateRoute />}>
 						<Route path="/cart" element={<Cart />}></Route>
-						<Route path="/purchase" element={<PurchaseReport />}></Route>
 					</Route>
+					<Route path="/purchase" element={<PurchaseReport />}></Route>
 				</Routes>
 			</Router>
 		</>
