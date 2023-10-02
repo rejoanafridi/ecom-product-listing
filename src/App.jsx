@@ -6,6 +6,7 @@ import Register from "./auth/register/Register";
 import Layout from "./pages/Layout";
 import Cart from "./components/cart/Cart";
 import PrivateRoute from "./utils/PrivateRoute";
+import New from "./pages/New";
 function App() {
 	return (
 		<>
@@ -19,6 +20,7 @@ function App() {
 						<Route path="/cart" element={<Cart />}></Route>
 					</Route>
 					<Route path="/purchase" element={<PurchaseReport />}></Route>
+					<Route path="/new" element={<New />}></Route>
 				</Routes>
 			</Router>
 		</>
