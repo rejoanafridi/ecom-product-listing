@@ -1,7 +1,7 @@
 import React from "react";
 import MenuItems from "./MenuItems";
 import { Link, useNavigate } from "react-router-dom";
-import { BsCart } from "react-icons/Bs";
+import { BsCart } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogOut } from "../../features/auth/authSlice";
 import { useState } from "react";
